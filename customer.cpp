@@ -28,3 +28,26 @@ Customer createCustomer(std::string socialSecurity) {
 
 	return newCustomer; //Save customer in file
 }
+
+bool matchSocialSecurity(std::string socialSecurity) {
+	//Loop through existing customers and see if socialSecurity has a match.
+//	for (auto i : listOfSocialSecurity) {
+//		if (socialSecurity == i) {
+//			return true;
+//		}
+//	}
+//	return false;
+}
+
+bool matchPassword(std::string socialSecurity, std::string password) {
+
+	//Loop through existing customers and see if socialSecurity has a match.
+//	for (auto i : listOfSocialSecurity) {
+//		if (socialSecurity == i.socialSecurity) {
+//			if (password == i.password) {
+	//			return true;
+	//		}
+//		}
+//	}
+//	return false;
+}

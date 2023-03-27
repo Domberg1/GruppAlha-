@@ -12,3 +12,5 @@ public:
 };
 
 Customer createCustomer(std::string socialSecurity);
+bool matchSocialSecurity(std::string socialSecurity);
+bool matchPassword(std::string socialSecurity, std::string password);
