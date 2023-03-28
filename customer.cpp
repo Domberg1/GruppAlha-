@@ -1,4 +1,4 @@
-#include "test.h"
+#include "customer.h"
 
 Customer createCustomer(std::string socialSecurity) {
 	std::string password = "";
@@ -23,31 +23,50 @@ Customer createCustomer(std::string socialSecurity) {
 			newCustomer.balance = 0;
 			//fix account number
 			//customerPage(); //not yet created
+		   std::ofstream file("users.txt");
+		   file << newCustomer.socialSecurity << " " << newCustomer.password << "\n";
+		   file.close();
 		}
 	}
 
 	return newCustomer; //Save customer in file
 }
 
+Customer signUp() {
+	std::string socialSecurity;
+	while (1) {
+		std::cout << "Enter your social security number: ";
+		std::cin >> socialSecurity;
+		if (matchSocialSecurity(socialSecurity) == true) {
+			std::cout << "Social security already registered." << std::endl;
+			continue;
+		} else {
+			Customer newCustomer = createCustomer(socialSecurity);
+			return newCustomer;
+		}
+	}
+}
+
 bool matchSocialSecurity(std::string socialSecurity) {
-	//Loop through existing customers and see if socialSecurity has a match.
-//	for (auto i : listOfSocialSecurity) {
-//		if (socialSecurity == i) {
-//			return true;
-//		}
-//	}
-//	return false;
+   std::string storedUsername, password;
+   std::ifstream file("users.txt");
+   while (file >> storedUsername >> password) {
+      if (socialSecurity == storedUsername) {
+         file.close();
+         return true;
+      }
+   }
+   file.close();
+   return false;
 }
 
 bool matchPassword(std::string socialSecurity, std::string password) {
-
-	//Loop through existing customers and see if socialSecurity has a match.
-//	for (auto i : listOfSocialSecurity) {
-//		if (socialSecurity == i.socialSecurity) {
-//			if (password == i.password) {
-	//			return true;
-	//		}
-//		}
-//	}
-//	return false;
+   std::string username, pass;
+   std::ifstream file("users.txt");
+   while (file >> username >> pass) {
+      if (username == socialSecurity && pass == password) {
+         return true;
+      }
+   }
+   return false;
 }
