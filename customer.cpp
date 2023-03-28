@@ -18,14 +18,15 @@ Customer createCustomer(std::string socialSecurity) {
 			std::cout << "Password and Confirmed password must match." << std::endl;
 			continue;
 		}	else {
-			newCustomer.password = password; //need to be hashed
+			std::hash<std::string> hasher;
+			newCustomer.password = hasher(password);
 			newCustomer.socialSecurity = socialSecurity;
 			newCustomer.balance = 0;
 			//fix account number
 			//customerPage(); //not yet created
-		   std::ofstream file("users.txt");
-		   file << newCustomer.socialSecurity << " " << newCustomer.password << "\n";
-		   file.close();
+			std::ofstream file("users.txt");
+			file << newCustomer.socialSecurity << " " << newCustomer.password << "\n";
+			file.close();
 		}
 	}
 
@@ -48,25 +49,26 @@ Customer signUp() {
 }
 
 bool matchSocialSecurity(std::string socialSecurity) {
-   std::string storedUsername, password;
-   std::ifstream file("users.txt");
-   while (file >> storedUsername >> password) {
-      if (socialSecurity == storedUsername) {
-         file.close();
-         return true;
-      }
-   }
-   file.close();
-   return false;
+	std::string storedUsername, password;
+	std::ifstream file("users.txt");
+	while (file >> storedUsername >> password) {
+		if (socialSecurity == storedUsername) {
+			file.close();
+			return true;
+		}
+	}
+	file.close();
+	return false;
 }
 
 bool matchPassword(std::string socialSecurity, std::string password) {
-   std::string username, pass;
-   std::ifstream file("users.txt");
-   while (file >> username >> pass) {
-      if (username == socialSecurity && pass == password) {
-         return true;
-      }
-   }
-   return false;
+	std::hash<std::string> hasher;
+	std::string username, pass;
+	std::ifstream file("users.txt");
+	while (file >> username >> pass) {
+		if (username == socialSecurity && pass == hasher(password)) {
+			return true;
+		}
+	}
+	return false;
 }
