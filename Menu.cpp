@@ -12,64 +12,53 @@
 #include <chrono>
 #include <thread>
 #include <unistd.h>
-
-int loginTries = 3;
-
-template <typename Map>
-bool map_compare (Map const &lhs, Map const &rhs) {
-	// No predicate needed because there is operator== for pairs already.
-	return lhs.size() == rhs.size()
-			&& std::equal(lhs.begin(), lhs.end(),
-					rhs.begin());
-}
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include "customer.h"
 
 
-void login(int tries){
+constexpr size_t bufferSize = 1024 * 1024;
 
-	if(tries != 0){
-
-		std::map<std::string, std::string> loginAttempt;
-
+void login(){
+	int loginTries = 3;
+	while(loginTries >= 0){
+		if(loginTries == 0){
+			std::cout << "Account login has failed too many times, locked for 15 minutes";
+			sleep(60*15);
+			loginTries = 3;
+			continue;
+		}
 
 		std::string personnummer;
 		std::string password;
-
-		std::map<std::string, std::string> userList;
-
-
-		userList["Temp"] = "Temp2";
-
-
-		// Read userlist from file TBA
-
-//		std::ifstream ifs("userList.txt");
-
+		//		std::hash<std::string> passwordHasher;
 
 		std::cout << "Enter personnummer: " << std::endl;
 		std::cin >> personnummer;
 		std::cout << "Enter password: " << std::endl;
 		std::cin >> password;
+		//		passwordHasher(password);
 
-		loginAttempt.insert({personnummer, password});
-
-		if (map_compare(loginAttempt, userList) == 1){
+		if (matchPassword(personnummer, password) == true){
 			//login_success(loginAttempt.first, loginAttempt.second)
+			break;
+
 		}
+
 		else
 		{
-			std::cout << "Wrong personummer and/or password. Tries left: " << tries - 1 << std::endl;
-			login(tries - 1);
+			std::cout << "Wrong personnummer and/or password. Tries left: " << --loginTries << std::endl;
+			continue;
 		}
+
 	}
-	else
-	{
-		std::cout << "Account login has failed too many times, locked for 15 minutes";
-		sleep(60*15);
-	}
+	// Kör customer-page
 }
 
 
+
 int main() {
-	login(loginTries);
+	login();
 	return 0;
 }
