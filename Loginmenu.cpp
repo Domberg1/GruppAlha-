@@ -8,17 +8,8 @@
 
 #include <iostream>
 #include <string>
-#include <map>
-#include <chrono>
-#include <thread>
 #include <unistd.h>
-#include <fstream>
-#include <sstream>
-#include <vector>
 #include "customer.h"
-
-
-constexpr size_t bufferSize = 1024 * 1024;
 
 void login(){
 	int loginTries = 3;
@@ -38,10 +29,9 @@ void login(){
 		std::cin >> personnummer;
 		std::cout << "Enter password: " << std::endl;
 		std::cin >> password;
-				passwordHasher(password);
+		passwordHasher(password);
 
 		if (matchPassword(personnummer, password) == true){
-			//login_success(loginAttempt.first, loginAttempt.second)
 			break;
 
 		}
@@ -54,11 +44,4 @@ void login(){
 
 	}
 	// Kör customer-page
-}
-
-
-
-int main() {
-	login();
-	return 0;
 }
