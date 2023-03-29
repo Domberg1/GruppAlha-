@@ -20,7 +20,7 @@ Customer createCustomer(std::string socialSecurity) {
 		std::cin >> newPassword;
 		//ask customer to re-enter password if chosen and confirmed password do not match
 		if (password != newPassword) {
-			std::cout << "Password and Confirmed password must match." << std::endl;
+			std::cerr << "Password and Confirmed password must match." << std::endl;
 			continue;
 		}	else {
 			//if they do match: hash the password and store all customer information
@@ -43,9 +43,21 @@ Customer createCustomer(std::string socialSecurity) {
 
 void customerPage(std::string socialSecurity){
 	Customer customer;
+	int choice;
 	customer.socialSecurity = socialSecurity;
 	std::cout << "Welcome back "<< customer.socialSecurity << std::endl;
-	std::cout << "What can we help you with today?" << std::endl;
+	std::cout << "What can we help you with today?\n" << std::endl;
+	std::cout << "1. Balance" << std::endl;
+	std::cout << "2. Transactions" << std::endl;
+	std::cout << "3. Update customer info" << std::endl;
+	std::cin >> choice;
+
+
+	if (choice == 1){
+		std::cout << "Current balance is: " << customer.balance << "SEK";
+
+	}
+
 
 }
 
@@ -55,7 +67,7 @@ Customer signUp() {
 	std::string socialSecurity;
 	while (1) {
 		//prompt customer for social security number
-		std::cout << "Enter your social security number: ";
+		std::cout << "Enter your social security number: " << std::endl;
 		std::cin >> socialSecurity;
 		//ask customer to re-enter if social security is already registered
 		if (matchSocialSecurity(socialSecurity) == true) {

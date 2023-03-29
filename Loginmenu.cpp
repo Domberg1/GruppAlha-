@@ -15,12 +15,12 @@ void login(){
 	int loginTries = 3;
 	while(loginTries >= 0){
 		if(loginTries == 0){
-			std::cerr << "Account login has failed too many times, locked for 15 minutes";
+			std::cerr << "Account login has failed too many times, locked for 5 seconds" << std::endl;
 			--loginTries;
 			if(loginTries == -1){
 			loginTries = 3;
 			}
-			sleep(60*15);
+			sleep(5);
 			std::cout << "\n";
 			printMenu();
 			continue;
