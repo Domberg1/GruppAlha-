@@ -25,3 +25,29 @@ protected:
 	int personalNumber;
 //	You can also you all in the "bankTransaction".
 	};
+
+
+void transactionsPage(){
+	int choice;
+	while(true){
+		std::cout << "You transactions page, chose you mission four today. " << std::endl << std::endl;
+		std::cout << "1. Add transaction. " << std::endl;
+		std::cout << "2. View transaction. " << std::endl;
+		std::cout << "3. Go back to your main profile. " << std::endl;
+		std >> choice;
+
+//		if (choice == 1){
+//			run //*GA 17 add transaction*
+//			break; // exit loop
+//		}
+//		else if (choice == 2){
+//			run * GA-20 View transaction *
+//			break; //exit loop 	}
+//		else if (choice == 3){
+//			run * GA-21 Go back option*
+//			break; // exit loop		}
+//		else {
+//		std::cout << "Invalid choice. Please enter a valid number." << std::endl; }
+	}
+}
+/
