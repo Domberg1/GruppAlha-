@@ -40,7 +40,7 @@ void login(){
 
 
 		if (matchPassword(login.socialSecurity, login.password) == true){
-			customerPage(login);
+			customerPage(login.socialSecurity);
 			break;
 
 		}

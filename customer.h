@@ -4,6 +4,8 @@
 #include <fstream>
 #include <chrono>
 #include <unistd.h>
+#include <sstream>
+
 
 struct Customer{
 	std::string socialSecurity;
@@ -14,7 +16,7 @@ struct Customer{
 	float balance;
 };
 
-void customerPage(Customer socialSecurity);
+void customerPage(std::string socialSecurity);
 Customer createCustomer(std::string socialSecurity);
 Customer signUp();
 bool matchSocialSecurity(std::string socialSecurity);

@@ -12,6 +12,7 @@ void timer(){
 		sleep(1);
 		if (counter == 0){
 			std::cerr << "Logging out due to inactivity" << std::endl;
+
 			printMenu();
 		}
 	}
@@ -46,7 +47,7 @@ Customer createCustomer(std::string socialSecurity) {
 			//fix account number
 			//store social security number and hashed password in file
 			std::ofstream file("users.txt", std::ios_base::app);
-			file << newCustomer.socialSecurity << " " << newCustomer.password << " " << newCustomer.firstName << " " << newCustomer.lastName << "\n";
+			file << newCustomer.socialSecurity << " " << newCustomer.password << " " << newCustomer.firstName << " " << newCustomer.lastName << " " << newCustomer.balance << "\n";
 			file.close();
 			//call first logged in page
 			//customerPage(); //not yet created
@@ -56,30 +57,62 @@ Customer createCustomer(std::string socialSecurity) {
 	return newCustomer; //Save customer in file
 }
 
-void customerPage(Customer socialSecurity){
-	//	Customer customer;
+void customerPage(std::string socialSecurity){
+	Customer customer;
 	int choice;
+	std::string line;
 //	std::thread myThread(timer);
+	std::ifstream file("users.txt", std::ios_base::app);
+	// Read line and put input into customer.
+	while(getline(file, line)){
+		std::stringstream ss(line); // Convert the line to a stringstream
+		//		std::string variable1, variable2, variable3;
+		getline(ss, customer.socialSecurity, ' '); // Extract the first variable separated by comma
+		if(customer.socialSecurity == socialSecurity){
+
+			std::string balance;
+			getline(ss, customer.password, ' '); // Extract the second variable separated by comma
+			getline(ss, customer.firstName, ' '); // Extract the second variable separated by comma
+			getline(ss, customer.lastName, ' '); // Extract the third variable without any separator
+			getline(ss, balance); // Extract the third variable without any separator
+			customer.balance = stof(balance);
+
+
+			break;
+		}
+
+
+	}
 
 
 	//	customer.socialSecurity = socialSecurity;
-	std::cout << "Welcome back "<< socialSecurity.firstName << std::endl;
+	std::cout << "Welcome back "<< customer.firstName << std::endl;
+	jump:
 	std::cout << "What can we help you with today?\n" << std::endl;
 	std::cout << "1. Balance" << std::endl;
 	std::cout << "2. Transactions" << std::endl;
-	std::cout << "3. Update customer info" <<
-	std::endl;
+	std::cout << "3. Update customer info" << std::endl;
 	std::cin >> choice;
 
 
 
 
 	if (choice == 1){
-//		std::thread myThread(timer);
-		std::cout << "Current balance is: " << socialSecurity.balance << "SEK";
+		//		std::thread myThread(timer);
+		std::cout << "Current balance is: " << customer.balance << "SEK" << std::endl;
+		char alternative;
+		std::cout << "Press y to return to customer page or n to logout" << std::endl;
+		std::cin >> alternative;
+		if (alternative == 'y'){
+			goto jump;
+		}
+		else if (alternative == 'n')
+		{
+			printMenu();
+		}
+
 
 	}
-//	myThread.detach();
 }
 
 
