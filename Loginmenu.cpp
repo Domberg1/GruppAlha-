@@ -26,18 +26,21 @@ void login(){
 			continue;
 		}
 
+		Customer login;
+
 		std::string personnummer;
 		std::string password;
 
 
 		std::cout << "Enter personnummer: " << std::endl;
-		std::cin >> personnummer;
+//		std::cin >> personnummer;
+		std::cin >> login.socialSecurity;
 		std::cout << "Enter password: " << std::endl;
-		std::cin >> password;
+		std::cin >> login.password;
 
 
-		if (matchPassword(personnummer, password) == true){
-			customerPage(personnummer);
+		if (matchPassword(login.socialSecurity, login.password) == true){
+			customerPage(login);
 			break;
 
 		}

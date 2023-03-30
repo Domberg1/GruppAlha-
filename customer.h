@@ -13,7 +13,8 @@ struct Customer{
 	unsigned int accountNumber;
 	float balance;
 };
-void customerPage(std::string socialSecurity);
+
+void customerPage(Customer socialSecurity);
 Customer createCustomer(std::string socialSecurity);
 Customer signUp();
 bool matchSocialSecurity(std::string socialSecurity);

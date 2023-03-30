@@ -1,6 +1,21 @@
 #include "customer.h"
 #include "Menu.h"
+#include <thread>
 
+
+
+void timer(){
+	int counter = 5;
+	while (counter != 0)
+	{
+		counter--;
+		sleep(1);
+		if (counter == 0){
+			std::cerr << "Logging out due to inactivity" << std::endl;
+			printMenu();
+		}
+	}
+}
 //function to create a new customer and and add then to the user list
 Customer createCustomer(std::string socialSecurity) {
 	//necessary variables and objects
@@ -31,7 +46,7 @@ Customer createCustomer(std::string socialSecurity) {
 			//fix account number
 			//store social security number and hashed password in file
 			std::ofstream file("users.txt", std::ios_base::app);
-			file << newCustomer.socialSecurity << " " << newCustomer.password << "\n";
+			file << newCustomer.socialSecurity << " " << newCustomer.password << " " << newCustomer.firstName << " " << newCustomer.lastName << "\n";
 			file.close();
 			//call first logged in page
 			//customerPage(); //not yet created
@@ -41,25 +56,34 @@ Customer createCustomer(std::string socialSecurity) {
 	return newCustomer; //Save customer in file
 }
 
-void customerPage(std::string socialSecurity){
-	Customer customer;
+void customerPage(Customer socialSecurity){
+	//	Customer customer;
 	int choice;
-	customer.socialSecurity = socialSecurity;
-	std::cout << "Welcome back "<< customer.socialSecurity << std::endl;
+//	std::thread myThread(timer);
+
+
+	//	customer.socialSecurity = socialSecurity;
+	std::cout << "Welcome back "<< socialSecurity.firstName << std::endl;
 	std::cout << "What can we help you with today?\n" << std::endl;
 	std::cout << "1. Balance" << std::endl;
 	std::cout << "2. Transactions" << std::endl;
-	std::cout << "3. Update customer info" << std::endl;
+	std::cout << "3. Update customer info" <<
+	std::endl;
 	std::cin >> choice;
 
 
+
+
 	if (choice == 1){
-		std::cout << "Current balance is: " << customer.balance << "SEK";
+//		std::thread myThread(timer);
+		std::cout << "Current balance is: " << socialSecurity.balance << "SEK";
 
 	}
-
-
+//	myThread.detach();
 }
+
+
+
 
 //function to let customer create a new account
 Customer signUp() {
@@ -72,8 +96,8 @@ Customer signUp() {
 		//ask customer to re-enter if social security is already registered
 		if (matchSocialSecurity(socialSecurity) == true) {
 			std::cerr << "Social security already registered." << std::endl;
-//			std::cerr << "Going back to start menu..." << "\n" << std::endl;
-//			printMenu();
+			//			std::cerr << "Going back to start menu..." << "\n" << std::endl;
+			//			printMenu();
 			continue;
 
 		} else {
