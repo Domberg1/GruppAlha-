@@ -61,12 +61,11 @@ void customerPage(std::string socialSecurity){
 	Customer customer;
 	int choice;
 	std::string line;
-//	std::thread myThread(timer);
+	//	std::thread myThread(timer);
 	std::ifstream file("users.txt", std::ios_base::app);
 	// Read line and put input into customer.
 	while(getline(file, line)){
 		std::stringstream ss(line); // Convert the line to a stringstream
-		//		std::string variable1, variable2, variable3;
 		getline(ss, customer.socialSecurity, ' '); // Extract the first variable separated by comma
 		if(customer.socialSecurity == socialSecurity){
 
@@ -78,6 +77,7 @@ void customerPage(std::string socialSecurity){
 			customer.balance = stof(balance);
 
 
+			file.close();
 			break;
 		}
 
@@ -110,9 +110,57 @@ void customerPage(std::string socialSecurity){
 		{
 			printMenu();
 		}
-
-
 	}
+	else if (choice == 2){
+		double amount;
+		std::string line2;
+		std::string depositFirst, depositSecond;
+		Customer customer2;
+		jump2:
+		std::cout << "To which account would you like to make a transaction? enter customer first and last name" << std::endl;
+		std::cin >> depositFirst;
+		std::cin >> depositSecond;
+		std::ifstream file2("users.txt", std::ios_base::app);
+
+		// Read line and put input into customer.
+		while(getline(file2, line2)){
+			std::stringstream ss2(line2); // Convert the line to a stringstream
+			getline(ss2, customer2.socialSecurity, ' '); // Extract the first variable separated by comma
+
+				std::string balance2;
+				getline(ss2, customer2.password, ' '); // Extract the second variable separated by comma
+				getline(ss2, customer2.firstName, ' '); // Extract the second variable separated by comma
+				getline(ss2, customer2.lastName, ' '); // Extract the third variable without any separator
+				getline(ss2, balance2); // Extract the third variable without any separator
+				customer2.balance = stof(balance2);
+
+			if(customer2.firstName == depositFirst && customer2.lastName == depositSecond){
+				std::cout << "How much money would you like to transfer to " << customer2.firstName << " " << customer2.lastName << std::endl;
+				std::cout << "Enter amount without currency: " << std::endl;
+				std::cin >> amount;
+				if(customer.balance > amount){
+					std::cout << customer2.balance << std::endl;
+					customer.balance -= amount;
+					customer2.balance += amount;
+					std::cout << "Transfer successful!" << std::endl;
+					break;
+				}
+				else if(customer.balance < amount){
+					std::cout << "Insufficient funds" << std::endl;
+				}
+				else{
+					std::cout << "User not found, try again? y/n" << std::endl;
+					goto jump2;
+				}
+
+
+			}
+
+
+		}
+	}
+
+
 }
 
 
